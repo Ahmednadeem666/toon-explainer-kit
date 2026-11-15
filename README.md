@@ -54,6 +54,7 @@ Your finished video lands in **projects/&lt;name&gt;/out/final.mp4**, with `capt
 | `style/bg-style.txt` | the prompt prefix for AI backgrounds. Drop a `style/reference.png` to lock the look. |
 | `sfx/` | drop your own `pop.wav`, `whoosh.wav`, `cash.wav`… to override the built-in ones |
 | `projects/demo` | a 40-second sample storyboard |
+| `site/` | the landing page (deployed on Vercel via `vercel.json`) — not needed to make videos |
 
 ### Commands (Claude runs these for you)
 ```

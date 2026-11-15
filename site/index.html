@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Toon Kit — free Claude workflow for cartoon explainer videos</title>
+<meta name="description" content="Claude makes long-form cartoon explainer videos: chibi characters, maps that light up, charts that draw themselves, text synced to every word. Free.">
+<meta property="og:title" content="Toon Kit — free Claude workflow">
+<meta property="og:description" content="Claude makes cartoon explainer videos. Script, voice, scenes, render. Free.">
+<meta property="og:image" content="poster.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#0a0a0a;--card:#141414;--line:#262420;--cream:#f1eadc;--muted:#a39d92;--dim:#6f6a62;--gold:#d9b45a;--gold2:#f0d48a;--tg:#2aabee}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--cream);font:16px/1.6 Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(rgba(255,255,255,.07) 1px,transparent 1px);background-size:22px 22px}
+  .wrap{max-width:820px;margin:0 auto;padding:72px 24px 96px}
+  .badge{display:flex;gap:12px;align-items:center;font:700 12px/1 "JetBrains Mono",monospace;letter-spacing:.18em;color:var(--muted)}
+  .badge b{background:var(--gold);color:#1a1408;padding:7px 10px;border-radius:3px;letter-spacing:.12em}
+  h1{font-family:"Archivo Black",sans-serif;font-size:clamp(64px,13vw,124px);line-height:.95;letter-spacing:-.02em;margin:22px 0 22px;color:var(--cream)}
+  .lede{font-size:clamp(18px,2.4vw,21px);line-height:1.5;color:#e6dfd1;max-width:680px}
+  .small{color:var(--dim);font-size:14px;margin-top:14px}
+  .video{margin:40px 0 0;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:#000;box-shadow:0 30px 80px -30px rgba(217,180,90,.25)}
+  .video video{display:block;width:100%;height:auto}
+  .vcap{font:500 12px "JetBrains Mono",monospace;color:var(--dim);margin-top:10px;letter-spacing:.04em}
+
+  /* lock card */
+  .gate{margin:44px 0 0;border-radius:14px;padding:3px;background:linear-gradient(135deg,var(--gold),#6b5420 60%,var(--gold));box-shadow:0 0 60px -12px rgba(217,180,90,.45)}
+  .gate-in{background:#17140d;border-radius:12px;padding:26px 26px 24px}
+  .gate h3{font:700 13px "JetBrains Mono",monospace;letter-spacing:.16em;color:var(--gold);display:flex;align-items:center;gap:10px}
+  .gate p{margin:10px 0 18px;color:#e6dfd1;font-size:17px}
+  .gate p strong{color:var(--cream)}
+  .btn{display:flex;align-items:center;gap:16px;width:100%;text-align:left;border:0;cursor:pointer;border-radius:10px;padding:16px 18px;font:inherit;text-decoration:none;transition:transform .15s ease,filter .15s ease}
+  .btn:hover{transform:translateY(-1px);filter:brightness(1.05)}
+  .btn .ic{width:44px;height:44px;border-radius:8px;display:grid;place-items:center;flex:none}
+  .btn .t1{display:block;font-weight:700;font-size:18px;line-height:1.2}
+  .btn .t2{display:block;font:500 13px "JetBrains Mono",monospace;opacity:.7;margin-top:3px}
+  .btn-tg{background:var(--tg);color:#fff}
+  .btn-tg .ic{background:rgba(255,255,255,.18)}
+  .btn-dl{background:var(--cream);color:#151515}
+  .btn-dl .ic{background:#151515;color:var(--cream)}
+  .btn-dl[aria-disabled="true"]{pointer-events:none;filter:grayscale(1) blur(1.5px);opacity:.35}
+  .meter{height:6px;background:#2a2518;border-radius:99px;margin:16px 0 4px;overflow:hidden;display:none}
+  .meter i{display:block;height:100%;width:0;background:var(--gold);border-radius:99px;transition:width .2s linear}
+  .status{font:500 13px "JetBrains Mono",monospace;color:var(--muted);min-height:20px;margin-top:8px}
+  .row{display:grid;gap:12px}
+  .unlocked .btn-tg{display:none}
+
+  /* what it does */
+  h2{font-family:"Archivo Black",sans-serif;font-size:30px;margin:72px 0 18px;letter-spacing:-.01em}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}
+  .tile{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px}
+  .tile b{display:block;font-size:16px;margin-bottom:4px}
+  .tile span{color:var(--muted);font-size:14.5px}
+
+  /* steps */
+  .step{display:flex;gap:18px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:22px;margin-bottom:12px}
+  .num{flex:none;width:32px;height:32px;border-radius:50%;border:1px solid #3a372f;display:grid;place-items:center;font:700 14px "JetBrains Mono",monospace;color:var(--muted)}
+  .step h4{font-size:17px;font-weight:700;margin-bottom:4px}
+  .step p{color:#d8d1c3;font-size:15.5px}
+  .step p b{color:var(--cream)}
+  .code{display:flex;margin-top:12px;border:1px solid #2c2a25;border-radius:8px;overflow:hidden;background:#0d0d0d}
+  .code>div{flex:1;min-width:0;padding:10px 14px}
+  .code small{display:block;font:700 10.5px "JetBrains Mono",monospace;letter-spacing:.14em;color:var(--dim);margin-bottom:4px}
+  .code code{display:block;font:700 14px "JetBrains Mono",monospace;color:var(--cream);white-space:nowrap;overflow-x:auto;padding-bottom:2px}
+  .copy{flex:none;border:0;border-left:1px solid #2c2a25;background:#161616;color:var(--muted);font:600 13px Inter;padding:0 16px;cursor:pointer}
+  .copy:hover{color:var(--cream)}
+  .copy.ok{color:var(--gold)}
+  .stepbody{min-width:0;flex:1}
+
+  .cta2{margin-top:56px;text-align:center;border:1px dashed #3a372f;border-radius:14px;padding:30px 20px}
+  .cta2 p{color:#d8d1c3;margin-bottom:16px}
+  .cta2 a{display:inline-flex;gap:10px;align-items:center;background:var(--tg);color:#fff;text-decoration:none;font-weight:700;padding:13px 20px;border-radius:10px}
+  footer{margin-top:56px;color:var(--dim);font-size:13px;text-align:center}
+  footer a{color:var(--muted)}
+  @media (max-width:560px){.wrap{padding-top:48px}.step{flex-direction:column;gap:12px}.btn .t1{font-size:16px}}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="badge"><b>FREE</b> CLAUDE WORKFLOW</div>
+  <h1>Toon Kit</h1>
+  <p class="lede">Claude makes cartoon explainer videos: chibi characters, maps that light up, charts that draw themselves, and text that hits on every word. Long-form, 16:9, YouTube-ready.</p>
+  <p class="small">Free to use. Works on Windows, Mac and Linux.</p>
+
+  <div class="video">
+    <video src="demo.mp4" poster="poster.jpg" autoplay muted loop playsinline preload="metadata"></video>
+  </div>
+  <div class="vcap">↑ 40-sec test render. Zero editing, zero After Effects. Claude wrote the storyboard, the kit drew it.</div>
+
+  <section class="gate" id="get">
+    <div class="gate-in" id="gate">
+      <h3><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" id="lockic"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span id="gtitle">DOWNLOAD LOCKED</span></h3>
+      <p id="gtext">Join the Telegram to unlock it. <strong>Takes 5 seconds</strong>, and that's where the next kits drop first.</p>
+      <div class="row">
+        <button class="btn btn-tg" id="join" type="button">
+          <span class="ic"><svg width="24" height="24" viewBox="0 0 24 24" fill="#fff"><path d="M21.9 4.3 18.6 19.9c-.2 1.1-.9 1.4-1.8.9l-5-3.7-2.4 2.3c-.3.3-.5.5-1 .5l.4-5.1 9.2-8.3c.4-.4-.1-.6-.6-.2L6 13.4l-4.9-1.5c-1.1-.3-1.1-1.1.2-1.6L20.5 2.9c.9-.3 1.7.2 1.4 1.4z"/></svg></span>
+          <span><span class="t1">Join @affcooker on Telegram</span><span class="t2">opens in a new tab · then come back here</span></span>
+        </button>
+        <a class="btn btn-dl" id="dl" aria-disabled="true" rel="noopener">
+          <span class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v12M6 11l6 6 6-6M5 20h14"/></svg></span>
+          <span><span class="t1">Download the kit</span><span class="t2">toon-explainer-kit.zip · from GitHub</span></span>
+        </a>
+      </div>
+      <div class="meter" id="meter"><i id="bar"></i></div>
+      <div class="status" id="status"></div>
+    </div>
+  </section>
+
+  <h2>What Claude does with it</h2>
+  <div class="grid">
+    <div class="tile"><b>Finds the angle</b><span>Gives you 3 hooks to pick from, then researches it with real sources.</span></div>
+    <div class="tile"><b>Writes the script</b><span>Chapter by chapter, for your OK. Short lines, no AI slop.</span></div>
+    <div class="tile"><b>Storyboards every scene</b><span>Characters, maps, charts, stamps, text cards. A new shot every ~3 sec.</span></div>
+    <div class="tile"><b>Voices it</b><span>ElevenLabs, or your own mic. Every word gets timed.</span></div>
+    <div class="tile"><b>Syncs to the word</b><span>Say "600,000 chips" and the counter starts on "six."</span></div>
+    <div class="tile"><b>Renders 1080p</b><span>MP4, captions file and YouTube chapters. All on your machine.</span></div>
+  </div>
+
+  <h2>Setup in 5 steps</h2>
+
+  <div class="step"><div class="num">1</div><div class="stepbody">
+    <h4>Unzip it</h4>
+    <p>Put it somewhere easy to find, like your Desktop. You'll get a folder called <b>toon-explainer-kit-main</b>.</p>
+  </div></div>
+
+  <div class="step"><div class="num">2</div><div class="stepbody">
+    <h4>Install the two tools it needs</h4>
+    <p>Skip any you already have: <b>Node.js 18+</b> and <b>ffmpeg</b>. No Python needed.</p>
+    <div class="code"><div><small>WINDOWS (POWERSHELL)</small><code>winget install OpenJS.NodeJS.LTS; winget install Gyan.FFmpeg</code></div><button class="copy" type="button">Copy</button></div>
+    <div class="code"><div><small>MAC</small><code>brew install node ffmpeg</code></div><button class="copy" type="button">Copy</button></div>
+  </div></div>
+
+  <div class="step"><div class="num">3</div><div class="stepbody">
+    <h4>Run setup once</h4>
+    <p>On Windows, double-click <b>setup.bat</b> inside the folder. On Mac or Linux, run the command below inside the folder. It installs the renderer (~200 MB) and does a test render.</p>
+    <div class="code"><div><small>MAC / LINUX</small><code>bash setup.sh</code></div><button class="copy" type="button">Copy</button></div>
+  </div></div>
+
+  <div class="step"><div class="num">4</div><div class="stepbody">
+    <h4>Open the folder in Claude Code and say what you want</h4>
+    <p>Claude reads the kit's rules and walks you through it: angle, script for your OK, storyboard preview, voice, render, then a style check.</p>
+    <div class="code"><div><small>SAY THIS TO CLAUDE</small><code>make a video about why the stock market crashed</code></div><button class="copy" type="button">Copy</button></div>
+  </div></div>
+
+  <div class="step"><div class="num">5</div><div class="stepbody">
+    <h4>Have your ElevenLabs key ready</h4>
+    <p>For the voiceover, or record your own and give Claude the file. Optional: an OpenAI or fal key for AI-painted backgrounds. Your finished video lands in <b>projects/&lt;name&gt;/out/final.mp4</b>.</p>
+  </div></div>
+
+  <div class="cta2">
+    <p>More free kits, CPA plays and TikTok organic stuff drop in the Telegram first.</p>
+    <a href="https://www.t.me/affcooker" target="_blank" rel="noopener">Join @affcooker →</a>
+  </div>
+
+  <footer>Toon Kit · free Claude workflow · <a href="https://www.t.me/affcooker" target="_blank" rel="noopener">t.me/affcooker</a></footer>
+</main>
+
+<script>
+(function () {
+  var TG = 'https://www.t.me/affcooker';
+  var ZIP = 'https://github.com/Ahmednadeem666/toon-explainer-kit/archive/refs/heads/main.zip';
+  var KEY = 'toonkit_unlocked_v1';
+  var join = document.getElementById('join'), dl = document.getElementById('dl'), status = document.getElementById('status');
+  var meter = document.getElementById('meter'), bar = document.getElementById('bar'), gate = document.getElementById('gate');
+
+  function store(k, v) { try { if (v === undefined) return localStorage.getItem(k); localStorage.setItem(k, v); } catch (e) { return null; } }
+
+  function unlock(silent) {
+    gate.classList.add('unlocked');
+    document.getElementById('gtitle').textContent = 'UNLOCKED';
+    document.getElementById('lockic').innerHTML = '<rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 7.5-2"/>';
+    document.getElementById('gtext').innerHTML = "You're in. <strong>Grab the kit</strong> and follow the 5 steps below.";
+    dl.setAttribute('href', ZIP);
+    dl.removeAttribute('aria-disabled');
+    meter.style.display = 'none';
+    status.textContent = silent ? '' : 'unlocked ✓';
+    store(KEY, '1');
+  }
+
+  join.addEventListener('click', function () {
+    window.open(TG, '_blank', 'noopener');
+    join.disabled = true; join.style.opacity = '.6';
+    meter.style.display = 'block';
+    var t = 0, total = 50; // 5s
+    status.textContent = 'tap "Join" in Telegram, then come back…';
+    var iv = setInterval(function () {
+      t++; bar.style.width = (t / total * 100) + '%';
+      if (t === 25) status.textContent = 'unlocking…';
+      if (t >= total) { clearInterval(iv); unlock(false); }
+    }, 100);
+  });
+
+  if (store(KEY) === '1') unlock(true);
+
+  document.querySelectorAll('.copy').forEach(function (b) {
+    b.addEventListener('click', function () {
+      var txt = b.parentNode.querySelector('code').textContent;
+      (navigator.clipboard ? navigator.clipboard.writeText(txt) : Promise.reject()).then(function () {
+        b.textContent = 'Copied'; b.classList.add('ok');
+        setTimeout(function () { b.textContent = 'Copy'; b.classList.remove('ok'); }, 1400);
+      }).catch(function () {});
+    });
+  });
+})();
+</script>
+</body>
+</html>
