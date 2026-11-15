@@ -1,0 +1,22 @@
+{
+  "name": "toon-explainer-kit",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Claude makes long-form cartoon explainer videos: chibi characters, hand-drawn scenes, word-synced text.",
+  "type": "module",
+  "bin": { "toon": "kit/cli.js" },
+  "scripts": {
+    "toon": "node kit/cli.js"
+  },
+  "engines": { "node": ">=18" },
+  "dependencies": {
+    "@fontsource/gochi-hand": "^5.3.0",
+    "@fontsource/patrick-hand": "^5.3.0",
+    "@fontsource/permanent-marker": "^5.3.0",
+    "d3-geo": "^3.1.2",
+    "puppeteer": "^25.0.0",
+    "topojson-client": "^3.1.0",
+    "us-atlas": "^3.0.1",
+    "world-atlas": "^2.0.2"
+  }
+}

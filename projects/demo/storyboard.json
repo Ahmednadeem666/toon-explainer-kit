@@ -1,0 +1,451 @@
+{
+  "title": "How a Market Crash Actually Works",
+  "settings": {
+    "fps": 30
+  },
+  "cast": {
+    "investor": {
+      "type": "character",
+      "look": {
+        "skin": "light",
+        "hair": "balding",
+        "hairColor": "gray",
+        "glasses": "round",
+        "top": "suit",
+        "shirt": "#2c3440",
+        "tie": "#c9343a"
+      }
+    },
+    "trader": {
+      "type": "character",
+      "look": {
+        "skin": "tan",
+        "hair": "short",
+        "hairColor": "black",
+        "top": "shirt",
+        "shirt": "#f4f1ea",
+        "tie": "#2e6fd8"
+      }
+    },
+    "chipco": {
+      "type": "blob",
+      "shape": "square",
+      "color": "#62c26a",
+      "label": "CHIPCO",
+      "labelSize": 26
+    }
+  },
+  "scenes": [
+    {
+      "id": "s01",
+      "type": "card",
+      "vo": "In a single afternoon, billions of dollars can just... vanish."
+    },
+    {
+      "id": "s02",
+      "vo": "On Monday, everyone on the trading floor feels like a genius.",
+      "bg": {
+        "preset": "trading-floor",
+        "mood": "green"
+      },
+      "mood": "green",
+      "transition": "flash",
+      "elements": [
+        {
+          "type": "ticker",
+          "y": 1050,
+          "items": [
+            {
+              "sym": "NOVA",
+              "price": "412.20",
+              "chg": 6.1
+            },
+            {
+              "sym": "OPAL",
+              "price": "88.40",
+              "chg": 3.2
+            },
+            {
+              "sym": "SAGE",
+              "price": "120.90",
+              "chg": 4.4
+            },
+            {
+              "sym": "TERN",
+              "price": "61.10",
+              "chg": 2.7
+            }
+          ]
+        },
+        {
+          "type": "crowd",
+          "n": 12,
+          "rows": 2,
+          "x": 960,
+          "y": 1000,
+          "scale": 0.85,
+          "spacing": 200,
+          "top": "suit",
+          "react": "idle",
+          "actions": [
+            {
+              "at": "genius",
+              "react": "jump",
+              "expr": "grin"
+            }
+          ]
+        },
+        {
+          "type": "counter",
+          "from": 0,
+          "to": 1569,
+          "prefix": "DOW +",
+          "x": 960,
+          "y": 300,
+          "style": "neon",
+          "color": "#5be05b",
+          "size": 120,
+          "at": "Monday",
+          "dur": 1.6,
+          "sfx": "rise"
+        },
+        {
+          "type": "particles",
+          "kind": "paper",
+          "n": 30,
+          "at": "genius"
+        }
+      ]
+    },
+    {
+      "id": "s03",
+      "vo": "Prices only go up. Until, one day, they don't.",
+      "bg": {
+        "preset": "sunset"
+      },
+      "elements": [
+        {
+          "type": "line",
+          "panel": false,
+          "axis": false,
+          "values": [
+            10,
+            14,
+            13,
+            19,
+            24,
+            22,
+            31,
+            38,
+            36,
+            47,
+            55,
+            20
+          ],
+          "w": 1500,
+          "h": 520,
+          "x": 960,
+          "y": 560,
+          "color": "#62e04b",
+          "width": 10,
+          "dur": 3.2,
+          "drawAt": 0.3,
+          "rider": {
+            "look": {
+              "skin": "light",
+              "hair": "balding",
+              "hairColor": "gray",
+              "glasses": "round",
+              "top": "suit",
+              "shirt": "#2c3440"
+            },
+            "pose": "cheer",
+            "expr": "grin",
+            "scale": 0.32
+          }
+        },
+        {
+          "type": "text",
+          "style": "tag",
+          "text": "TO THE MOON",
+          "x": 1450,
+          "y": 240,
+          "rotate": -6,
+          "at": "up",
+          "sfx": "pop"
+        },
+        {
+          "type": "stamp",
+          "text": "UH OH",
+          "x": 1500,
+          "y": 760,
+          "at": "don't",
+          "sfx": "stamp"
+        }
+      ]
+    },
+    {
+      "id": "s04",
+      "vo": "Take Gary. Gary put his whole retirement into one chip company.",
+      "bg": {
+        "preset": "office"
+      },
+      "elements": [
+        {
+          "type": "character",
+          "who": "investor",
+          "x": 760,
+          "y": 880,
+          "expr": "happy",
+          "at": "Gary",
+          "pose": "idle",
+          "actions": [
+            {
+              "at": "whole",
+              "pose": "point",
+              "expr": "smug"
+            }
+          ]
+        },
+        {
+          "type": "prop",
+          "prop": "desk",
+          "x": 1000,
+          "y": 790,
+          "scale": 1.7
+        },
+        {
+          "type": "prop",
+          "prop": "monitor",
+          "trend": "up",
+          "x": 1180,
+          "y": 680,
+          "scale": 0.95
+        },
+        {
+          "type": "text",
+          "style": "sticky",
+          "text": "SAFE!!",
+          "x": 1500,
+          "y": 560,
+          "rotate": 6,
+          "at": "retirement",
+          "sfx": "pop",
+          "size": 58
+        },
+        {
+          "type": "blob",
+          "who": "chipco",
+          "x": 1560,
+          "y": 860,
+          "scale": 0.8,
+          "at": "chip",
+          "expr": "grin",
+          "sfx": "pop",
+          "float": 6
+        }
+      ]
+    },
+    {
+      "id": "s05",
+      "vo": "But money is global. When one market sneezes, everyone catches a cold.",
+      "camera": {
+        "from": {
+          "zoom": 1.0
+        },
+        "to": {
+          "zoom": 1.25,
+          "x": 1180,
+          "y": 470
+        }
+      },
+      "elements": [
+        {
+          "type": "map",
+          "region": "world",
+          "highlight": [
+            {
+              "name": "United States of America",
+              "color": "#d6403a",
+              "at": "sneezes"
+            },
+            {
+              "name": "China",
+              "color": "#e8833a",
+              "at": "everyone"
+            },
+            {
+              "name": "Japan",
+              "color": "#e8833a",
+              "at": "cold"
+            }
+          ],
+          "routes": [
+            {
+              "from": [
+                -74,
+                40.7
+              ],
+              "to": [
+                116.4,
+                39.9
+              ],
+              "at": "everyone",
+              "dashed": true
+            },
+            {
+              "from": [
+                -74,
+                40.7
+              ],
+              "to": [
+                139.7,
+                35.7
+              ],
+              "at": "catches"
+            }
+          ],
+          "pins": [
+            {
+              "ll": [
+                -74,
+                40.7
+              ],
+              "label": "WALL ST",
+              "at": "market"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "s06",
+      "vo": "And the biggest one-day drops all look the same: fast, red, and brutal.",
+      "bg": {
+        "preset": "board"
+      },
+      "elements": [
+        {
+          "type": "bars",
+          "title": "WORST ONE-DAY FALLS (illustrative)",
+          "panel": false,
+          "x": 960,
+          "y": 560,
+          "w": 1200,
+          "h": 560,
+          "suffix": "%",
+          "decimals": 1,
+          "bars": [
+            {
+              "label": "Day A",
+              "value": -4.1,
+              "color": "#e0453c",
+              "at": "biggest"
+            },
+            {
+              "label": "Day B",
+              "value": -6.8,
+              "color": "#e0453c",
+              "at": "fast"
+            },
+            {
+              "label": "Day C",
+              "value": -9.9,
+              "color": "#e0453c",
+              "at": "red",
+              "face": "shocked"
+            }
+          ]
+        },
+        {
+          "type": "arrow",
+          "from": [
+            1500,
+            300
+          ],
+          "to": [
+            1400,
+            560
+          ],
+          "color": "#d6403a",
+          "at": "brutal",
+          "sfx": "whoosh"
+        }
+      ]
+    },
+    {
+      "id": "s07",
+      "vo": "Then the panic hits. Everybody wants out at the same time.",
+      "bg": {
+        "preset": "trading-floor",
+        "mood": "red"
+      },
+      "mood": "alarm",
+      "transition": "whip",
+      "elements": [
+        {
+          "type": "crowd",
+          "n": 12,
+          "rows": 2,
+          "x": 960,
+          "y": 1010,
+          "scale": 0.85,
+          "spacing": 200,
+          "top": "suit",
+          "expr": "shocked",
+          "react": "panic"
+        },
+        {
+          "type": "counter",
+          "from": 0,
+          "to": -4,
+          "suffix": "%",
+          "prefix": "NASDAQ ",
+          "x": 960,
+          "y": 300,
+          "style": "neon",
+          "color": "#ff4a4a",
+          "size": 130,
+          "at": "panic",
+          "dur": 1.2,
+          "sfx": "alarm"
+        },
+        {
+          "type": "character",
+          "who": "trader",
+          "x": 380,
+          "y": 900,
+          "scale": 1.05,
+          "expr": "shocked",
+          "pose": "panic",
+          "at": "Everybody",
+          "in": "slideRight",
+          "shake": {
+            "at": "wants",
+            "until": "time",
+            "amp": 4
+          }
+        },
+        {
+          "type": "stamp",
+          "text": "SELL!",
+          "x": 1480,
+          "y": 600,
+          "at": "out",
+          "sfx": "stamp"
+        },
+        {
+          "type": "particles",
+          "kind": "paper",
+          "n": 40,
+          "at": "panic"
+        }
+      ]
+    },
+    {
+      "id": "s08",
+      "type": "card",
+      "vo": "So who's actually left holding the bag?"
+    }
+  ]
+}
